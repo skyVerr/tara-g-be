@@ -9,10 +9,30 @@ app.use(cors());
 //Routes
 const auth = require('./routes/auth');
 const lookBadge = require('./routes/look_badge');
+const business = require('./routes/business');
+
+var webhooks;
+
+
+
+app.get('/webhooks', (req, res) => {
+    webhooks = req.query;
+    res.send(req.query['hub.challenge']).end();
+});
+
+app.post('/webhooks', (req, res) => {
+    webhooks = req.body;
+    res.json(req.body).end();
+});
+
+app.get('/getwebhooks', (req, res) => {
+    res.json(webhooks);
+});
 
 
 app.use('/auth', auth);
 app.use('/look_badge', lookBadge);
+app.use('/business', business);
 
 //Serve images
 app.use('/images',express.static('images'));

@@ -53,7 +53,7 @@ class Auth {
 
     static async signupTravellers(req ,res) {
         try {
-            if( !!req.body.email && !!req.body.password && !!req.body.firstname  && !!req.body.lastname && !!req.body.bday){
+            if( !!req.body.email && !!req.body.password && !!req.body.firstname  && !!req.body.lastname){
                 let sql1 = "INSERT INTO users SET ?";
                 let sql2 = "INSERT INTO travellers SET ?";
                 let hash = bcrypt.hashSync(req.body.password, 10);
@@ -77,8 +77,7 @@ class Auth {
                         let traveller = {
                             id: results.insertId,
                             firstname: req.body.firstname,
-                            lastname: req.body.lastname,
-                            bday: req.body.bday
+                            lastname: req.body.lastname
                         };
 
                         connection.query(sql2, traveller, (err, results) =>{
@@ -98,7 +97,7 @@ class Auth {
                                 delete user.password;
                                 user.id = traveller.id;
                                 let token = jwt.sign({user, traveller}, secretKey);
-                                return res.status(201).json({token});
+                                return res.status(201).json({token, id: user.id});
                             });
                         });
                     });

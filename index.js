@@ -10,6 +10,7 @@ app.use(cors());
 const auth = require('./routes/auth');
 const lookBadge = require('./routes/look_badge');
 const business = require('./routes/business');
+const travellers = require('./routes/travellers');
 
 var webhooks;
 
@@ -33,6 +34,7 @@ app.get('/getwebhooks', (req, res) => {
 app.use('/auth', auth);
 app.use('/look_badge', lookBadge);
 app.use('/business', business);
+app.use('/travellers', travellers);
 
 //Serve images
 app.use('/images',express.static('images'));

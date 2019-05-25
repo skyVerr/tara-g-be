@@ -14,8 +14,6 @@ const travellers = require('./routes/travellers');
 
 var webhooks;
 
-
-
 app.get('/webhooks', (req, res) => {
     webhooks = req.query;
     res.send(req.query['hub.challenge']).end();
